@@ -1,10 +1,7 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.action_chains import ActionChains
 
 from utils import utilClass
 
@@ -41,6 +38,9 @@ class mainClass:
         divArray = []
         divArray = self.driver.find_elements(By.CLASS_NAME, "sr-item")
         for div in divArray:
+            actions = ActionChains(self.driver)
+            actions.move_to_element(div).perform()
+            
             self.serialNo.append(self.utilClassObj.textInfoGraber(div, By.CLASS_NAME, "sr-counter-label", self.textTypeInfo))
             self.name.append(self.utilClassObj.textInfoGraber(div, By.XPATH, ".//*[@class='sr-item-details-info']/span/h3", self.textTypeInfo))
             self.rating.append(self.utilClassObj.textInfoGraber(div, By.XPATH, ".//*[@class='sr-item-details-info-rating']/span", self.textTypeInfo))
